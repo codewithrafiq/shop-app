@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopapp/screens/cart_screens.dart';
+import 'package:shopapp/state/cartState.dart';
 import 'package:shopapp/widgets/all_products.dart';
 
 class HomeScreens extends StatefulWidget {
@@ -37,6 +40,26 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ],
             icon: Icon(Icons.more_vert),
+          ),
+          Consumer<CartState>(
+            builder: (ctx, data, cahild) {
+              return RaisedButton.icon(
+                color: Colors.green,
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CartScreens.routeName);
+                },
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  data.cart.length.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            },
           )
         ],
       ),

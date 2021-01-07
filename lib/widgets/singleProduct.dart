@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/models/Product.dart';
 import 'package:shopapp/screens/product_details_screens.dart';
+import 'package:shopapp/state/cartState.dart';
 
 class SingleProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
+
     return GridTile(
       header: GridTileBar(
         backgroundColor: Colors.black54,
@@ -35,9 +37,18 @@ class SingleProduct extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-        trailing: Icon(
-          Icons.shopping_cart,
-          color: Colors.red,
+        trailing: IconButton(
+          onPressed: () {
+            Provider.of<CartState>(context, listen: false).addToCart(
+              product.id,
+              product.price,
+              product.title,
+            );
+          },
+          icon: Icon(
+            Icons.shopping_cart,
+            color: Colors.red,
+          ),
         ),
       ),
       child: GestureDetector(
