@@ -52,4 +52,8 @@ class ProductState with ChangeNotifier {
           'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
     ),
   ];
+
+  List<Product> get product {
+    return [..._product];
+  }
 }
