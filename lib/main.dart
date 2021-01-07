@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/screens/home_screens.dart';
+import 'package:shopapp/screens/product_details_screens.dart';
 import 'package:shopapp/state/productState.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => ProductState(),
-        )
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           HomeScreens.routeName: (ctx) => HomeScreens(),
+          ProductDetailsScreens.routeName: (ctx) => ProductDetailsScreens(),
         },
       ),
     );

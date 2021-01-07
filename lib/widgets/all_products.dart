@@ -4,9 +4,12 @@ import 'package:shopapp/state/productState.dart';
 import 'package:shopapp/widgets/singleProduct.dart';
 
 class AllProducts extends StatelessWidget {
+  final bool favoriteOnly;
+  AllProducts(this.favoriteOnly);
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<ProductState>(context, listen: false).product;
+    final prddata = Provider.of<ProductState>(context, listen: false);
+    final product = favoriteOnly ? prddata.onlyFavorites : prddata.product;
     return GridView.builder(
       padding: const EdgeInsets.all(7),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -16,11 +19,9 @@ class AllProducts extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemCount: product.length,
-      itemBuilder: (ctx, i) => SingleProduct(
-        id: product[i].id,
-        title: product[i].title,
-        price: product[i].price,
-        imageUrl: product[i].imageUrl,
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        value: product[i],
+        child: SingleProduct(),
       ),
     );
   }
