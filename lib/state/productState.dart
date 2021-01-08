@@ -64,4 +64,9 @@ class ProductState with ChangeNotifier {
   List<Product> get onlyFavorites {
     return _product.where((element) => element.isFavorate).toList();
   }
+
+  void addProduct(Product newProduct) {
+    _product.insert(0, newProduct);
+    notifyListeners();
+  }
 }
