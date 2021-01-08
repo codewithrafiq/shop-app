@@ -40,4 +40,14 @@ class CartState with ChangeNotifier {
     });
     return total;
   }
+
+  void removeCard(String id) {
+    _cart.remove(id);
+    notifyListeners();
+  }
+
+  void clearCard() {
+    _cart.clear();
+    notifyListeners();
+  }
 }

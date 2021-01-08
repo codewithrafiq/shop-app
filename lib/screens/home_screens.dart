@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopapp/screens/cart_screens.dart';
 import 'package:shopapp/state/cartState.dart';
 import 'package:shopapp/widgets/all_products.dart';
+import 'package:shopapp/widgets/appDrower.dart';
 
 class HomeScreens extends StatefulWidget {
   static const routeName = '/';
@@ -16,6 +17,7 @@ class _HomeScreensState extends State<HomeScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrower(),
       appBar: AppBar(
         title: Text("Home"),
         actions: [
