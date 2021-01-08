@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/models/Product.dart';
 import 'package:shopapp/state/productState.dart';
@@ -17,6 +16,8 @@ class _AddProductScreensState extends State<AddProductScreens> {
   String description = '';
   String price = '';
   String imageUrl = '';
+  bool didchange = true;
+  var productId;
 
   void _submitForm() {
     final isValid = _form.currentState.validate();
@@ -24,6 +25,7 @@ class _AddProductScreensState extends State<AddProductScreens> {
       return;
     }
     _form.currentState.save();
+
     Product newProduct = Product(
       id: DateTime.now().toString(),
       title: title,
@@ -31,8 +33,31 @@ class _AddProductScreensState extends State<AddProductScreens> {
       price: double.parse(price),
       imageUrl: imageUrl,
     );
-    Provider.of<ProductState>(context, listen: false).addProduct(newProduct);
-    Navigator.of(context).pop();
+    if (productId == null) {
+      Provider.of<ProductState>(context, listen: false).addProduct(newProduct);
+      Navigator.of(context).pop();
+    } else {
+      Provider.of<ProductState>(context, listen: false)
+          .editProduct(productId, newProduct);
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (didchange) {
+      try {
+        productId = ModalRoute.of(context).settings.arguments;
+        Product product = Provider.of<ProductState>(context, listen: false)
+            .singleProduct(productId);
+        title = product.title;
+        description = product.description;
+        price = product.price.toString();
+        imageUrl = product.imageUrl;
+      } catch (_) {}
+    }
+    didchange = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -49,6 +74,7 @@ class _AddProductScreensState extends State<AddProductScreens> {
             child: Column(
               children: [
                 TextFormField(
+                  initialValue: title,
                   decoration: InputDecoration(
                     hintText: "Title",
                   ),
@@ -64,6 +90,7 @@ class _AddProductScreensState extends State<AddProductScreens> {
                   },
                 ),
                 TextFormField(
+                  initialValue: description,
                   decoration: InputDecoration(
                     hintText: "Description",
                   ),
@@ -79,6 +106,7 @@ class _AddProductScreensState extends State<AddProductScreens> {
                   },
                 ),
                 TextFormField(
+                  initialValue: price,
                   decoration: InputDecoration(
                     hintText: "Price",
                   ),
@@ -101,6 +129,7 @@ class _AddProductScreensState extends State<AddProductScreens> {
                   },
                 ),
                 TextFormField(
+                  initialValue: imageUrl,
                   decoration: InputDecoration(
                     hintText: "Image Url",
                   ),
@@ -123,7 +152,7 @@ class _AddProductScreensState extends State<AddProductScreens> {
                     _submitForm();
                   },
                   child: Text(
-                    "Add Product",
+                    productId != null ? 'Edit Product' : 'Add Product',
                     style: TextStyle(
                       color: Colors.white,
                     ),

@@ -69,4 +69,19 @@ class ProductState with ChangeNotifier {
     _product.insert(0, newProduct);
     notifyListeners();
   }
+
+  void editProduct(String id, Product editedProduct) {
+    final productIdex = _product.indexWhere((prod) => prod.id == id);
+    if (productIdex >= 0) {
+      _product[productIdex] = editedProduct;
+      notifyListeners();
+    } else {
+      print('Somthing is Wrong');
+    }
+  }
+
+  void delateProduct(String id) {
+    _product.removeWhere((prod) => prod.id == id);
+    notifyListeners();
+  }
 }

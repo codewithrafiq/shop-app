@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopapp/models/Product.dart';
-import 'package:shopapp/screens/product_details_screens.dart';
-import 'package:shopapp/state/cartState.dart';
+import '../models/Product.dart';
+import '../screens/product_details_screens.dart';
+import '../state/cartState.dart';
 
 class SingleProduct extends StatelessWidget {
   @override
@@ -21,6 +21,7 @@ class SingleProduct extends StatelessWidget {
         ),
       ),
       footer: GridTileBar(
+        backgroundColor: Colors.black54,
         leading: IconButton(
           onPressed: () {
             product.togoleFavorit();
@@ -31,7 +32,7 @@ class SingleProduct extends StatelessWidget {
           ),
         ),
         title: Text(
-          "\$$product.price",
+          "\$${product.price}",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 18,
